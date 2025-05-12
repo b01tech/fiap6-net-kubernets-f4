@@ -1,0 +1,121 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "http://gatewayapi:8080",
+    "AuthenticationOptions": {
+      "AuthenticationProviderKey": "Bearer"
+    }
+  },
+  "Routes": [
+    // Azure Function
+    {
+      "DownstreamPathTemplate": "/api/contatos",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "apigetcontatos.azurewebsites.net",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/Contatos",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamQueryStringsTransform": {
+        "ddd": "{ddd}",
+        "id": "{id}"
+      }
+    },
+    // API.AUTH.TOKEN
+    {
+      "DownstreamPathTemplate": "/Token",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "auth",
+          "Port": 8082
+        }
+      ],
+      "UpstreamPathTemplate": "/Token",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    // API.AUTH.USUARIO
+    {
+      "DownstreamPathTemplate": "/Usuario",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "auth",
+          "Port": 8082
+        }
+      ],
+      "UpstreamPathTemplate": "/Usuario",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    // API.AUTH.USUARIO *PROTEGIDO*
+    {
+      "DownstreamPathTemplate": "/Usuario",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "auth",
+          "Port": 8082
+        }
+      ],
+      "UpstreamPathTemplate": "/Usuario",
+      "UpstreamHttpMethod": [ "Delete" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    // API.Adicionar Contato *PROTEGIDO*
+    {
+      "DownstreamPathTemplate": "/AdicionarContato",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "adicionarcontatos",
+          "Port": 8086
+        }
+      ],
+      "UpstreamPathTemplate": "/AdicionarContato",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    // API.Atualizar Contato *PROTEGIDO*
+    {
+      "DownstreamPathTemplate": "/AtualizarContato",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "atualizarcontatos",
+          "Port": 8088
+        }
+      ],
+      "UpstreamPathTemplate": "/AtualizarContato",
+      "UpstreamHttpMethod": [ "Patch" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+    // API.Remover Contato *PROTEGIDO*
+    {
+      "DownstreamPathTemplate": "/RemoverContato/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "removercontatos",
+          "Port": 8090
+        }
+      ],
+      "UpstreamPathTemplate": "/RemoverContato/{id}",
+      "UpstreamHttpMethod": [ "Delete" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    }
+  ]
+}
