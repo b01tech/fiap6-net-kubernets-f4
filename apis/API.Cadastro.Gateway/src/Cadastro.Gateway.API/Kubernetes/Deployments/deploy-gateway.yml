@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gatewayapi
+  namespace: monitoring
   labels:
     app: gatewayapi
 spec:
@@ -20,10 +21,10 @@ spec:
           ports:
             - containerPort: 8080
             - containerPort: 8081
-      resources:
-        requests:
-          cpu: "250m"
-          memory: "256Mi"
-        limits:
-          cpu: "500m"
-          memory: "512Mi"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
